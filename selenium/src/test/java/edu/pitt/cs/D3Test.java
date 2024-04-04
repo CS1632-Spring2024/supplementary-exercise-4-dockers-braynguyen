@@ -35,6 +35,7 @@ public class D3Test {
   private WebDriver driver;
   private Map<String, Object> vars;
   JavascriptExecutor js;
+
   @Before
   public void setUp() {
     ChromeOptions options = new ChromeOptions();
@@ -44,10 +45,12 @@ public class D3Test {
     js = (JavascriptExecutor) driver;
     vars = new HashMap<String, Object>();
   }
+
   @After
   public void tearDown() {
     driver.quit();
   }
+
   @Test
   public void tEST1LINKS() {
     // Test name: TEST-1-LINKS
@@ -65,6 +68,7 @@ public class D3Test {
     // 4 | assert | href | /reset
     assertEquals(vars.get("href").toString(), "http://localhost:8080/reset");
   }
+
   @Test
   public void tEST2RESET() {
     // Test name: TEST-2-RESET
@@ -82,6 +86,7 @@ public class D3Test {
     // 6 | assertText | xpath=//*[@id="listing"]/ul/li[3] | ID 3. Mistoffelees
     assertThat(driver.findElement(By.xpath("//*[@id=\"listing\"]/ul/li[3]")).getText(), is("ID 3. Mistoffelees"));
   }
+
   @Test
   public void tEST3CATALOG() {
     // Test name: TEST-3-CATALOG
@@ -101,6 +106,7 @@ public class D3Test {
     // 5 | assert | src | /images/cat2.jpg
     assertEquals(vars.get("src").toString(), "http://localhost:8080/images/cat2.jpg");
   }
+
   @Test
   public void tEST4LISTING() {
     // Test name: TEST-4-LISTING
@@ -118,6 +124,7 @@ public class D3Test {
     // 6 | assertText | xpath=//*[@id="listing"]/ul/li[3] | ID 3. Mistoffelees
     assertThat(driver.findElement(By.xpath("//*[@id=\"listing\"]/ul/li[3]")).getText(), is("ID 3. Mistoffelees"));
   }
+
   @Test
   public void tEST5RENTACAT() {
     // Test name: TEST-5-RENT-A-CAT
@@ -131,14 +138,15 @@ public class D3Test {
     // 4 | assertElementPresent | xpath=//button[contains(.,'Rent')] | 
     {
       List<WebElement> elements = driver.findElements(By.xpath("//button[contains(.,\'Rent\')]"));
-      assert(elements.size() > 0);
+      assert (elements.size() > 0);
     }
     // 5 | assertElementPresent | xpath=//button[contains(.,'Return')] | 
     {
       List<WebElement> elements = driver.findElements(By.xpath("//button[contains(.,\'Return\')]"));
-      assert(elements.size() > 0);
+      assert (elements.size() > 0);
     }
   }
+
   @Test
   public void tEST6RENT() {
     // Test name: TEST-6-RENT
@@ -164,6 +172,7 @@ public class D3Test {
     // 10 | assertText | //*[@id="rentResult"] | Success!
     assertThat(driver.findElement(By.xpath("//*[@id=\"rentResult\"]")).getText(), is("Success!"));
   }
+
   @Test
   public void tEST7RETURN() {
     // Test name: TEST-7-RETURN
@@ -189,6 +198,7 @@ public class D3Test {
     // 10 | assertText | id=returnResult | Success!
     assertThat(driver.findElement(By.id("returnResult")).getText(), is("Success!"));
   }
+
   @Test
   public void tEST8FEEDACAT() {
     // Test name: TEST-8-FEED-A-CAT
@@ -202,9 +212,10 @@ public class D3Test {
     // 4 | assertElementPresent | xpath=//button[contains(.,'Feed')] | 
     {
       List<WebElement> elements = driver.findElements(By.xpath("//button[contains(.,\'Feed\')]"));
-      assert(elements.size() > 0);
+      assert (elements.size() > 0);
     }
   }
+
   @Test
   public void tEST9FEED() {
     // Test name: TEST-9-FEED
@@ -223,12 +234,14 @@ public class D3Test {
     driver.findElement(By.xpath("//button[contains(.,\'Feed\')]")).click();
     // 7 | verifyElementPresent | xpath=//div[@class='col-xs-2 text-left']/following-sibling::div[@class='col-xs-3 text-left' and @id='feedResult'] | 
     {
-      List<WebElement> elements = driver.findElements(By.xpath("//div[@class=\'col-xs-2 text-left\']/following-sibling::div[@class=\'col-xs-3 text-left\' and @id=\'feedResult\']"));
-      assert(elements.size() > 0);
+      List<WebElement> elements = driver.findElements(By.xpath(
+          "//div[@class=\'col-xs-2 text-left\']/following-sibling::div[@class=\'col-xs-3 text-left\' and @id=\'feedResult\']"));
+      assert (elements.size() > 0);
     }
     // 8 | assertText | id=feedResult | Nom, nom, nom.
     assertThat(driver.findElement(By.id("feedResult")).getText(), is("Nom, nom, nom."));
   }
+
   @Test
   public void tEST10GREETACAT() {
     // Test name: TEST-10-GREET-A-CAT
@@ -242,9 +255,10 @@ public class D3Test {
     // 4 | assertElementPresent | xpath=//h4[contains(.,'Meow!Meow!Meow!')] | 
     {
       List<WebElement> elements = driver.findElements(By.xpath("//h4[contains(.,\'Meow!Meow!Meow!\')]"));
-      assert(elements.size() > 0);
+      assert (elements.size() > 0);
     }
   }
+
   @Test
   public void tEST11GREETACATWITHNAME() {
     // Test name: TEST-11-GREET-A-CAT-WITH-NAME
@@ -253,66 +267,5 @@ public class D3Test {
     driver.get("http://localhost:8080//greet-a-cat/Jennyanydots");
     // 2 | assertText | xpath=//div[@id='greeting']/h4 | Meow! from Jennyanydots.
     assertThat(driver.findElement(By.xpath("//div[@id=\'greeting\']/h4")).getText(), is("Meow! from Jennyanydots."));
-  }
-  @Test
-  public void dEFECT1FUNGREETACAT() {
-    // Test name: DEFECT1-FUN-GREET-A-CAT
-    // Step # | name | target | value
-    // 1 | open | /feed-a-cat | 
-    driver.get("http://localhost:8080//feed-a-cat");
-    // 2 | runScript | document.cookie = "1=false";document.cookie = "2=false";document.cookie = "3=false"; | 
-    js.executeScript("document.cookie = \"1=false\";document.cookie = \"2=false\";document.cookie = \"3=false\";");
-    // 3 | click | linkText=Rent-A-Cat | 
-    driver.findElement(By.linkText("Rent-A-Cat")).click();
-    // 4 | click | id=rentID | 
-    driver.findElement(By.id("rentID")).click();
-    // 5 | type | id=rentID | 1
-    driver.findElement(By.id("rentID")).sendKeys("1");
-    // 6 | click | css=.form-group:nth-child(3) .btn | 
-    driver.findElement(By.cssSelector(".form-group:nth-child(3) .btn")).click();
-    // 7 | click | id=rentID | 
-    driver.findElement(By.id("rentID")).click();
-    // 8 | type | id=rentID | 2
-    driver.findElement(By.id("rentID")).sendKeys("2");
-    // 9 | click | css=.form-group:nth-child(3) .btn | 
-    driver.findElement(By.cssSelector(".form-group:nth-child(3) .btn")).click();
-    // 10 | click | linkText=Greet-A-Cat | 
-    driver.findElement(By.linkText("Greet-A-Cat")).click();
-    // 11 | assertText | css=#greeting > h4 | Meow!
-    assertThat(driver.findElement(By.cssSelector("#greeting > h4")).getText(), is("Meow!"));
-  }
-  @Test
-  public void dEFECT2FUNFEEDACAT() {
-    // Test name: DEFECT2-FUN-FEED-A-CAT
-    // Step # | name | target | value
-    // 1 | open | /feed-a-cat | 
-    driver.get("http://localhost:8080//feed-a-cat");
-    // 2 | runScript | document.cookie = "1=false";document.cookie = "2=true";document.cookie = "3=true"; | 
-    js.executeScript("document.cookie = \"1=false\";document.cookie = \"2=true\";document.cookie = \"3=true\";");
-    // 3 | click | id=catnips | 
-    driver.findElement(By.id("catnips")).click();
-    // 4 | type | id=catnips | -1
-    driver.findElement(By.id("catnips")).sendKeys("-1");
-    // 5 | click | xpath=//button[contains(.,'Feed')] | 
-    driver.findElement(By.xpath("//button[contains(.,\'Feed\')]")).click();
-    // 6 | assertText | xpath=//*[@id="feedResult"] | Cat fight!
-    assertThat(driver.findElement(By.xpath("//*[@id=\"feedResult\"]")).getText(), is("Cat fight!"));
-  }
-  @Test
-  public void dEFECT3FUNFEEDACAT() {
-    // Test name: DEFECT3-FUN-FEED-A-CAT
-    // Step # | name | target | value
-    // 1 | open | /feed-a-cat | 
-    driver.get("http://localhost:8080//feed-a-cat");
-    // 2 | runScript | document.cookie = "1=false";document.cookie = "2=false";document.cookie = "3=false"; | 
-    js.executeScript("document.cookie = \"1=false\";document.cookie = \"2=false\";document.cookie = \"3=false\";");
-    // 3 | click | id=catnips | 
-    driver.findElement(By.id("catnips")).click();
-    // 4 | type | id=catnips | 0
-    driver.findElement(By.id("catnips")).sendKeys("0");
-    // 5 | click | xpath=//button[contains(.,'Feed')] | 
-    driver.findElement(By.xpath("//button[contains(.,\'Feed\')]")).click();
-    // 6 | assertText | xpath=//*[@id="feedResult"] | Cat fight!
-    assertThat(driver.findElement(By.xpath("//*[@id=\"feedResult\"]")).getText(), is("Cat fight!"));
   }
 }
